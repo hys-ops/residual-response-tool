@@ -20,12 +20,21 @@ internal nodes. This gives the claimed logarithmic upper.
 
 **Data lower bound via an actual cofactor.** Let $N=n-2$, $s=|u|$, and form $x=\operatorname{reverse}(\neg u)\,10$. Fix every $y_j=0$. The new weight is $N+1-s$. If $s\ge w$, the queried bits are the complements of $u_s,\ldots,u_{s-w+1}$. If $s<w$, offset $s$ hits the appended one at site $N+1$, forcing rejection. The cofactor is therefore exactly the predicate that a run of $w$ ones ends at weight $s$. Fixing tests, complementing branches and relabelling leaves size nonincreasing. The all-orders lower bound for this trailing-window predicate gives $\Omega((n/w)\log(w+1))$ for $w\le n-2$ (absolute small sizes absorbed). Its proof uses independently selectable cutoffs in disjoint cells.
 
-**Answer lower bound.** Cut after half the outputs have been read. Choose the side containing more real lookup sites and the outputs on the other side. Each output column reaches every real site as the trial weight $z$ varies. A double count after discarding extreme weights yields one $z$ with $2h$ distinct crossing comparisons in the same direction and $h\le z\le n-h$, where $h=\lfloor w/64\rfloor$. Put $h$ free bits on half those data sites, use the other half to bring their total weight to $h$, and fix $z-h$ ones elsewhere. Each assignment has **the same shift** $z$. Splicing the prefix of one correct input with the suffix of another preserves the data of one and the answers of the other on the selected comparisons. A differing bit forces rejection. Thus $2^h\le B+2$. This supplies the wide-output term, including widths omitted by the cofactor. Taking the maximum of the two lower estimates gives their sum up to an absolute factor.
+**Answer lower bound.** In any order, cut after half the data bits. For each answer bit, vary the trial weight over all residues: it visits each real lookup site once, giving at least $\lfloor n/2\rfloor-1$ comparisons across the cut. After discarding extreme weights, some fixed weight $z$ has enough crossing comparisons of one orientation to select $2h$ distinct data sites, where $h=\lfloor w/64\rfloor$ (small cases are absorbed in the constants). Pair the selected sites and independently assign each pair $10$ or $01$; fill the other data bits in one fixed way to get weight $z$, and set the answers to the correct window. There are $2^h$ such accepted inputs. Splicing the prefix of one with the suffix of another preserves the weight because the selected data sites are all on one side and carry exactly $h$ ones. A differing selected comparison forces rejection, so the prefixes have distinct residual functions. This gives the $\Omega(w)$ term.
 
 **Dependency.** The trailing-window theorem is a genuine premise by the displayed substitution. The crossing proof is independent. The tournament classification was the historical starting point for studying responses; it is absent from both reductions.
 
-### Verification
+### Full proof and verification
 
-Lean 4.34.1 proves `HWB.AllGraphOrders.optimal_all_widths` for the actual attained minimum. For $H=2^w(w+1)^{\lfloor n/w\rfloor}$ it gives $H\le(B+2)^{1073742208}$ and $B+2\le H^{16}$. Taking binary logs yields the displayed growth rate. The archive includes 51 Lean source modules. Run `python3 replay.py --lean lean`, then `python3 tests/graph.py` and `python3 tests/optima.py` for independent finite checks. [Research map](../README.md)
+[Complete written proof (PDF)](shwb-all-widths-proof.pdf) · [Lean source and replay instructions (ZIP)](shwb-all-widths-lean.zip)
 
-Companion proof and replay files cited by description are not attached to this page.
+Lean 4.34.1 proves `HWB.AllGraphOrders.optimal_all_widths` for the actual attained minimum. For $H=2^w(w+1)^{\lfloor n/w\rfloor}$ it gives $H\le(B+2)^{1073742208}$ and $B+2\le H^{16}$. Taking binary logs yields the displayed growth rate. The PDF gives a self-contained mathematical proof of the two-sided rate; it does not rely on Lean’s particular finite constants.
+
+The ZIP has the 50 source modules needed for this replay; no mathlib is required. From the extracted directory with Lean 4.34.1, run:
+
+```sh
+sha256sum -c SHA256SUMS
+python3 replay.py --lean lean --only AllGraphOrders
+```
+
+[Research map](../README.md)
