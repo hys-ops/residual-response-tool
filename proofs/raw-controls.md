@@ -20,8 +20,19 @@ The same sibling must implement both caps. In the four-row construction for a se
 
 **Communication corollary.** One party locally sets the address to a subset $S$; the other supplies the exterior zeros $Z$. The conjunction is true exactly when $S\cap Z=\varnothing$. This embeds ordinary set disjointness with these physical exterior bits, giving $\Omega(q)$ bounded-error randomized communication even with interaction by the classical disjointness theorem. The reduction is downstream of the raw compiler. [Kalyanasundaram and Schnitger, 1992](https://doi.org/10.1137/0405044)
 
-### Verification
+### Full proof and verification
 
-`PrefixWords.lean` checks `exact_card`, `gate_below_endpoint`, `budget_all_depths`, `anchored_count` and the local copy/selection identities. The original successful run is archived. A fresh proof-body check with only the umbrella tactic import narrowed produced the same eleven axiom reports. The raw-coordinate construction, whole-family extremal statement and communication reduction have written proofs. The scalar compiler checks all 16,512 height/control pairs for $q=7$; the independent raw-clause evaluator exhausts the test instances through $q=3$. Use the pinned Lake project and run `lake update`, `lake exe cache get`, `lake env lean PrefixWords.lean`. Finite checks are `python3 compiler.py`, `python3 source_check.py`, `python3 upper_check.py` and `python3 cover.py`. [Research map](../README.md)
+[Complete written proof (PDF)](raw-controls-proof.pdf) · [Lean source and replay instructions (ZIP)](raw-controls-lean.zip)
 
-Companion proof and replay files cited by description are not attached to this page.
+`PrefixWords.lean` checks the scalar prefix bound, freezing and recurrence, and selected local compiler identities. The physical-coordinate realization, whole-family extremal result and communication reduction are written proofs.
+
+From the extracted directory with the pinned Lean 4.34.1 toolchain, run:
+
+```sh
+sha256sum -c SHA256SUMS
+lake update
+lake exe cache get
+lake env lean PrefixWords.lean
+```
+
+[Research map](../README.md)

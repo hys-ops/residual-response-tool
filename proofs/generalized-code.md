@@ -20,9 +20,19 @@ Use Bova's left prime circuits verbatim. A truth table for each right sub costs 
 
 **Where the tournament is actually used.** At depth $d=n-1$, give the interior weight $\lceil d/2\rceil$ the all-zero code. Every digit row now has center zero, and the other rows are all ones. The tournament classification proves that **each** code row can be produced by an exterior assignment. The coding theorem itself follows from table capacity. A single set of raw wires implementing the rows jointly requires a further theorem. At $n=128$ the logical budget is three. [Tournament classification](tournament.md) · [Joint raw implementation](raw-controls.md)
 
-### Verification
+### Full proof and verification
 
-Lean checks the finite capacity and the three-versus-two example in `TagCapacity.lean`. The full substituted-circuit construction and transfer of the OBDD bound use the written proof. After installing the pinned Lean 4.34.1 and mathlib revision in the archive, run `lake update`, `lake exe cache get` and `lake env lean TagCapacity.lean`. Run `python3 encoding.py` for the finite checks. [Research map](../README.md)
+[Complete written proof (PDF)](generalized-code-proof.pdf) · [Lean source and replay instructions (ZIP)](generalized-code-lean.zip)
 
-Companion proof and replay files cited by description are not attached to this page.
+`TagCapacity.lean` checks finite response capacity with a prescribed Boolean entry, including the three-versus-two case at $n=128$. The substituted circuit and OBDD restriction argument are written proofs.
 
+From the extracted directory with the pinned Lean 4.34.1 toolchain, run:
+
+```sh
+sha256sum -c SHA256SUMS
+lake update
+lake exe cache get
+lake env lean TagCapacity.lean
+```
+
+[Research map](../README.md)

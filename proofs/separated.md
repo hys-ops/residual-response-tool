@@ -22,8 +22,17 @@ For $y_i$ alone the marks disappear. Every exact-weight predicate is forced at e
 
 **Dependency.** The proof uses forced fibers, marked-weight transport and charging a physical gate once. The [tournament theorem](tournament.md) motivated the response-table viewpoint. Neither its word classification nor the [smaller coded witness](generalized-code.md) enters the lower bound.
 
-### Verification
+### Full proof and verification
 
-`SelectionCost.lean` verifies `class_iff_response`, `marked_left_fibre`, `marked_right_row`, `per_gate_left`, `per_gate_right` and local counting lemmas. The propagation through an arbitrary shared tree and the cubic and quadratic wire theorems are written arguments. Use `lean SelectionCost.lean` (Lean 4.34.1), `python3 verify.py` and `python3 instances.py`. The finite experiments include all ordered leaf-labelled $X$ trees through $n=5$. [Research map](../README.md)
+[Complete written proof (PDF)](separated-vtree-proof.pdf) · [Lean source and replay instructions (ZIP)](separated-vtree-lean.zip)
 
-Companion proof and replay files cited by description are not attached to this page.
+`SelectionCost.lean` checks local forced-class, marked-weight and counting lemmas. Propagation through the shared DAG and the global cubic and quadratic wire bounds are written proofs.
+
+From the extracted directory with the pinned Lean 4.34.1 toolchain, run:
+
+```sh
+sha256sum -c SHA256SUMS
+lean SelectionCost.lean
+```
+
+[Research map](../README.md)
