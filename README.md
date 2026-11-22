@@ -4,21 +4,24 @@ OpenAI's sensitivity manuscript constructs Boolean functions with unbounded bloc
 
 ## The step extracted from the AI proof
 
-The chosen child has an integer height $h$, its largest true threshold, with zero when none is true. An outside assignment describes a binary word $w$ indexed by $h$. Put $H=Q-1$ when the child's maximum height is $Q$. Fix the child's siblings. The source clauses reduce to a constant or to this entire one-layer map, for $0\le D,E\le H$:
+The chosen child has an integer height $h$, its largest true threshold, with zero when none is true. An outside assignment describes a binary word $w$ indexed by $h$. Put $H=Q-1$ when the child's maximum height is $Q$. Fix the child's siblings. The source clauses reduce to a constant or to the following one-layer map, for $0\le D,E\le H$:
 
 $$
-R_{D,E}(h)=
-\begin{cases}\min(D,H-h),&0\le h\le H,\\ E,&h=H+1.\end{cases}
+R_{D,E}(h)=\min(D,H-h)\qquad(0\le h\le H).
+$$
+
+$$
+R_{D,E}(H+1)=E.
 $$
 
 Below full height, at most one other row can win. When it tests the chosen child, its other gates impose the cap $D$. At full height a different row can become eligible, supplying the endpoint $E$. If the next computation asks the parent's height the question $w$, the child's question is exactly $w\circ R_{D,E}$. This specifies the operation, its domain and how to compose it. Attaining every choice requires the designated path and independent sibling inputs. It yields **exactly 40 tests on six heights** at depth four. Of the eight possible triples of answers at positions $1,2,3$, precisely $000,001,100,101,111$ occur. The other three positions are free. [Tournament proof](proofs/tournament.md)
 
 ## What can travel to a different problem?
 
-For a Boolean function at a partition $A\mid B$, define the **response** to $a$ as the entire function $R_a(b)=f(a,b)$. For each attainable response $g$, define its **fiber** $P_g(a)=[R_a=g]$. Then
+For a Boolean function at a partition $A\mid B$, define the **response** to $a$ as the entire function $R_a(b)=f(a,b)$. For each attainable response $g$, define its **fiber** $P_g(a)=[R_a=g]$. Let $\mathcal R$ be the set of all attainable responses. Then
 
 $$
-f(a,b)=\bigvee_{g\in\{R_a:\,a\}}\bigl(P_g(a)\land g(b)\bigr).
+f(a,b)=\bigvee_{g\in\mathcal R}\bigl(P_g(a)\land g(b)\bigr).
 $$
 
 At a compressed sentential decision the fiber is the prime that must actually occur. At a cut in an ordered binary decision diagram (OBDD), two prefixes can share a state only if their responses agree on **every** suffix. Conversely, a record determining the residual function gives an upper construction by merging equivalent prefixes at each layer. These are standard facts about decision diagrams. [Darwiche, IJCAI 2011, §2, Theorem 3](https://ijcai.org/proceedings/2011/143) gives the unique compressed partition obtained by grouping assignments whose restrictions agree. Each application must supply the mathematics of its own responses. A lower-bound probe, for example, must supply **one common physical completion** on which two prefixes disagree. [Bova's paper, §2](https://cdn.aaai.org/ojs/10107/10107-13-13635-1-2-20201228.pdf)
