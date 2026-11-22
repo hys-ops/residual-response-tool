@@ -5,6 +5,9 @@ $$
 \log_2 S_1(n)=\Theta(\sqrt n),\qquad
 \log_2 S_2(n)=\Theta\!\left(n^{1/3}(\log_2 n)^{2/3}\right).
 $$
+
+**Full proofs and verification** · [Complete proofs (companion PDF, §§2–3)](Ordinary_HWB_From_One_Split_to_All_Vtrees.pdf) · [Lean source and replay scripts (ZIP)](ordinary-hwb-restricted-lean.zip)
+
 The second model counts levels on a path. Many distinct decisions can occupy the same level. These results measure the benefit of a second split, and expose the operation used later in the [all-vtree proof](hwb-all-vtrees.md).
 
 ### One split
@@ -27,6 +30,12 @@ For the lower put $K=n^{1/3}(\log_2 n)^{2/3}$. Balanced outer cuts already expos
 
 ### Verification
 
-Lean 4.34.1 checks the **one-level minimum and both bounds** in `HWB.ordinary_HWB_certified`. Run `sh verify.sh` from the unpacked project. For two levels, `HWB.Exact.all_large_n` proves the sharp lower for every sufficiently large $n$ and every eligible physical certificate, including the logarithmic factor. Run `python3 replay.py --lean lean --only ExactTwoLevels`. The two-level upper in this model is a written construction. The independent all-vtree upper allows deeper recursion and hence cannot certify this upper inside the two-level class. [Research map](../README.md)
+Lean 4.34.1 checks the **one-level minimum and both bounds** in `HWB.ordinary_HWB_certified`. For two adjacent levels, `HWB.Exact.all_large_n` establishes the lower bound for all sufficiently large $n$ in the formal certificate class, including the logarithmic factor. The written comparison in §3 of the companion transfers that bound to physical wire counts. Section 3.1 gives the written construction for the two-level upper bound, which remains outside the end-to-end Lean verification.
 
-Companion proof and replay files cited by description are not attached to this page.
+The archive contains 52 Lean source modules. From the extracted archive, run the following command.
+
+```sh
+python3 replay.py --lean "$(elan which lean)"
+```
+
+[Research map](../README.md)
