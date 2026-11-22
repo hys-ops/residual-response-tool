@@ -31,7 +31,5 @@ At depth one the possible triples are $000,001,100,101,111$. Capping repeats one
 
 Lean 4.34.1 checks `TournamentLookup.exact_language` for the scalar language (formal index $d-1$), `section_formula` for its two-row arithmetic, and `table_injective` for the corresponding one-bit programs. The passage from raw source clauses to all attainable sections and both communication conclusions have written proofs. Finite raw-clause checks are separate. The source's sensitivity estimates are independent of this argument.
 
-From the archive's `Tournament_Lookup` directory run `lean Lookup.lean`, `python3 verify.py`, `python3 contexts.py` and `python3 tournaments.py`. [Research map](../README.md)
-
-Companion proof and replay files cited by description are not attached to this page.
+For the public Lean source and replay instructions, see [Lean reproduction](tournament-lean/README.md). The separate Python checks described above are not included in the public Lean materials. [Research map](../README.md)
 
