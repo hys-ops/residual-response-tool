@@ -8,6 +8,8 @@ $$
 \boxed{\quad S_*(n)=2^{\Theta((\log_2 n)^2)}=n^{\Theta(\log_2 n)}.\quad}
 $$
 
+**Full proof and verification** · [Standalone proof (PDF, 20 pages)](Ordinary_HWB_Bova_Proof.pdf) · [Lean source and replay scripts (ZIP)](ordinary-hwb-all-vtrees-lean.zip) · [From one split to all vtrees (companion PDF)](Ordinary_HWB_From_One_Split_to_All_Vtrees.pdf)
+
 For $x=(x_1,\ldots,x_n)$, put $k=\sum_i x_i$. The output is $x_k$ when $k>0$ and zero when $k=0$. The lower bound holds even if the vtree has arbitrarily many extra, distinctly labelled leaves. For every assignment to those leaves the circuit must still compute the same $\mathrm{HWB}_n(x)$. One explicit vtree using exactly the original $n$ labels attains the upper bound. The theorem determines the growth rate of the **best** tree. Individual trees can cost more. Together with Bova’s cubic uncompressed construction (Theorem 3), the lower bound gives a superpolynomial separation between compressed and uncompressed SDD size for the same function.
 
 ## Where the tool came from
@@ -54,20 +56,14 @@ A correct query recovers the positions at which the copies were planted. A wrong
 
 ## What was verified
 
-| Scope | Evidence |
-| --- | --- |
-| Superpolynomial lower bound on every vtree, including extra leaves | `HWB.BovaAudit.bova_question` proves that for every fixed $A,d$, all sufficiently large $n$ and every eligible circuit of wire count $W$ satisfy $W>A(n+1)^d$. |
-| An upper circuit satisfying Bova’s requirement of at least two terms per decision OR | A singleton decision has a sole exhaustive prime, so its value equals its sub. `eliminate_singletons` proves that redirecting these references throughout a shared graph preserves its output, scope and compression, with no increase in wires. `strict_on_original` gives the upper circuit on precisely the original variables. |
-| Both bounds on one attained minimum | `HWB.BovaAudit.sharp_minimum` proves the two inequalities for the same minimum in the formal graph class. With $L=\lfloor\log_2 n\rfloor$ and $M=\lfloor\log_2(S+2)\rfloor$, they are $L^2\le 274877906944\,M$ and $M\le8192\,L^2$ whenever $\lfloor\log_2 L\rfloor\ge32$. |
-| Correspondence between Bova’s paper and the formal graph class | **Written proof in the audit README.** A paper circuit can retain its shared gate identities and wire incidences when assigned Lean scopes. In the reverse direction, keeping the ancestors of the strict witness’s output gives a paper circuit and can only remove wires. These directions transfer the asymptotic bounds to Bova’s model. |
+`HWB.Paper.sharp_paper_minimum` proves matching bounds for the same attained minimum in the formal Bova-style circuit model. The forward translation into the scoped graph model preserves the vtree, including unused leaves, as well as semantics, gate sharing and the reachable wire count. The reverse translation preserves the output cone without increasing the wire count.
 
-The audit archive records a clean build of 60 source modules with Lean 4.34.1 and a successful `leanchecker --fresh BovaAudit` replay. The final declarations use the standard axioms `propext`, `Classical.choice` and `Quot.sound`. To reproduce from the unpacked archive, run the following command.
+The lower bound in the Bova-style model covers every admissible vtree with unused padding allowed. The scoped graph argument gives a broader lower bound that also allows circuits to read extra labels, provided they compute ordinary HWB for every assignment to those labels. The explicit upper circuit uses only the original labels.
+
+The recorded clean replay used Lean 4.34.1 to build 70 source modules and passed the fresh kernel audit `PaperArcAudit`. The audited declarations use the standard axioms `propext`, `Classical.choice` and `Quot.sound`. From the extracted ZIP, run the following command.
 
 ```sh
-python3 replay.py --fresh-kernel --log-dir replay-logs
+python3 replay.py --lean "$(elan which lean)" --fresh-kernel --log-dir replay-logs
 ```
 
-This AI-assisted result is presented for independent review. The audit establishes the correspondence to Bova’s question. Historical priority and independent human verification remain unconfirmed.
-
-Companion proof and replay files cited by description are not attached to this page.
-
+Lean certifies the formal declarations. Sections 7–8 of the standalone proof compare the encoded syntax with Bova’s English definitions. Independent human review and historical priority remain unestablished.
