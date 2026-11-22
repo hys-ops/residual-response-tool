@@ -11,6 +11,8 @@ $$
 
 At that partition the exact deterministic, fixed-length, one-way communication costs are $\lceil\log_2(d+2)\rceil$ bits from the child to the exterior and $d+2$ bits in reverse. The recipient outputs the answer. These are costs on the full input domain of that root. [Source, §2.1–2.2, eq. (1)](https://github.com/openai/math/tree/4eaee87548250b2682affda7d05d947c05554bae/preprints/A-superquadratic-separation-between-sensitivity-and-block-sensitivity-September-25-2026)
 
+**[Read the complete written proof](tournament-full.md).**
+
 ### Proof
 
 **One layer.** A row wins threshold $q>0$ if all its own target children are full (height $Q$) and each gate it tests has height $<Q-q$. Set $H=Q-1$. Keep a child in row $j$ free. Below full height row $j$ cannot win. Of the other full rows at most one can win, since the edge between two candidates would test a full target. If it tests the free child, the variable test gives $q\le H-h$ and the other tests give a cap $D$. At $h=Q$ record the actual height $E$. A positive winner independent of the child stays the unique winner at the endpoint. Zero below the endpoint is the case $D=0$. Thus a section is constant or $R_{D,E}(h)=\min(D,H-h)$ for $h\le H$, with $R_{D,E}(Q)=E$.
