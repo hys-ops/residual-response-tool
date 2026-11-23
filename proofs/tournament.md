@@ -13,6 +13,8 @@ At that partition the exact deterministic, fixed-length, one-way communication c
 
 **[Read the complete written proof](tournament-full.md).**
 
+[Read the complete written proof (PDF)](tournament-proof.pdf)
+
 ### Proof
 
 **One layer.** A row wins threshold $q>0$ if all its own target children are full (height $Q$) and each gate it tests has height $<Q-q$. Set $H=Q-1$. Keep a child in row $j$ free. Below full height row $j$ cannot win. Of the other full rows at most one can win, since the edge between two candidates would test a full target. If it tests the free child, the variable test gives $q\le H-h$ and the other tests give a cap $D$. At $h=Q$ record the actual height $E$. A positive winner independent of the child stays the unique winner at the endpoint. Zero below the endpoint is the case $D=0$. Thus a section is constant or $R_{D,E}(h)=\min(D,H-h)$ for $h\le H$, with $R_{D,E}(Q)=E$.

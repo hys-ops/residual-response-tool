@@ -2,7 +2,7 @@
 
 *An exact classification of one-child restrictions of the tournament predicates*
 
-[Overview](tournament.md) · [Research map](../README.md) · [Lean reproduction](tournament-lean/README.md)
+[Printable proof (PDF)](tournament-proof.pdf) · [Overview](tournament.md) · [Research map](../README.md) · [Lean reproduction](tournament-lean/README.md)
 
 ## 1. What the surrounding inputs can request
 
