@@ -37,8 +37,8 @@ where $k=8(\lfloor\log_2\lfloor\log_2 d\rfloor\rfloor+4)$ sets the early scan le
 
 **Dependency.** This reuses programmable-pointer probes and residual counting. The unfiltered [SISA width theorem](sisa.md) identifies the question. Fixing $W$ and rejecting disallowed addresses can destroy its hard witnesses, so a separate proof on this family is essential.
 
+[Written lower-bound proof (PDF)](sisa-cluster-lower.pdf) · [Written upper-bound proof (PDF)](sisa-cluster-upper.pdf) · [Complete Lean replay (ZIP)](SISA_Optimal_Order_Lean_Reproduction.zip)
+
 ### Verification
 
 `SISA.Rate.optimal_rate` proves the two displayed finite inequalities and `SISA.Rate.superpolynomial_total` proves the statement in total input length. Lean 4.34.1 checks 60 modules, including 43 inherited source modules. The audit reports `propext`, `Classical.choice` and `Quot.sound` for both declarations. The final archive supersedes the verification status recorded in the earlier lower-bound PDF. Run `sha256sum -c SHA256SUMS` and `python3 replay.py --lean lean` at the ZIP root. [Research map](../README.md)
-
-Companion proof and replay files cited by description are not attached to this page.

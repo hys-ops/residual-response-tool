@@ -34,6 +34,8 @@ For a hard word, $t=\lfloor(\log_2 w)/4\rfloor$ observed sites of the common cor
 
 **Dependency.** The endpoint argument is reused. For SISA the address itself occupies memory also used as queried data. The two uses can overlap. The residue schedule for the upper bound and a physically disjoint, still-programmable pointer for the lower bound address that additional constraint. The numerical SHWB estimate is not a premise.
 
+[Full written proof (PDF)](sisa-widths.pdf) · [Lean sources and replay (ZIP)](SISA_All_Widths_Reproduction.zip)
+
 ### Verification
 
 Lean 4.34.1 proves `SISA.Pages.residue_legal` for the actual common-order diagram and `SISA.Profile.word_probe` for a disjoint physical query. For $w=m$, $m\ge4$, `SISA.Pages.diagonal_minimum` returns a least legal $B$ and both
@@ -42,5 +44,3 @@ $$
 B\le(2m+n)\,2^{6\cdot2^{m-\lfloor\log_2m\rfloor}+3m}.
 $$
 They give the diagonal rate $\Theta(n/m)$ after taking logs. The full-width classification and the fixed-word extrema above have written proofs. From the archive run `python3 replay.py --lean lean` and `python3 tests/check.py`. [Fully formalized filtered family](sisa-filtered.md) · [Research map](../README.md)
-
-Companion proof and replay files cited by description are not attached to this page.
