@@ -6,7 +6,7 @@ $$
 \log_2 S_2(n)=\Theta\!\left(n^{1/3}(\log_2 n)^{2/3}\right).
 $$
 
-**Full proofs and verification** · [Complete proofs (companion PDF, §§2–3)](Ordinary_HWB_From_One_Split_to_All_Vtrees.pdf) · [Lean source and replay scripts (ZIP)](ordinary-hwb-restricted-lean.zip)
+**Full proofs and verification** · [Complete focused proofs (PDF)](ordinary-hwb-restricted-proof.pdf) · [Combined manuscript, §§2–3 (PDF)](Ordinary_HWB_From_One_Split_to_All_Vtrees.pdf) · [Lean source and replay scripts (ZIP)](ordinary-hwb-restricted-lean.zip)
 
 The second model counts levels on a path. Many distinct decisions can occupy the same level. These results measure the benefit of a second split, and expose the operation used later in the [all-vtree proof](hwb-all-vtrees.md).
 
