@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A deterministic equivalence test for two free binary decision diagrams, with the manuscript and Lean verification materials.">
+<title>A deterministic subexponential-time equivalence test for free binary decision diagrams</title>
+<style>
+:root{color-scheme:light;--ink:#192b2a;--dark:#234d43;--muted:#4d615c;--line:#cadbd4;--bg:#f1f6f3;--white:#fff;--link:#125747}
+*{box-sizing:border-box}body{margin:0;font:1rem/1.64 system-ui,sans-serif;color:var(--ink);background:var(--bg)}main{max-width:60rem;margin:auto;padding:clamp(1.25rem,5vw,4rem)}h1,h2,p{margin:0}h1{font:700 clamp(2rem,5.6vw,3.6rem)/1.08 Georgia,serif;letter-spacing:-.038em;max-width:23ch;margin:.6rem 0 1rem}h2{font-size:1.3rem;margin:0 0 .6rem}p+p{margin-top:.7rem}a{color:var(--link);text-underline-offset:.18em}.label{font-size:.82rem;color:var(--muted);font-weight:750;letter-spacing:.09em;text-transform:uppercase}header{padding-bottom:1.5rem;border-bottom:1px solid var(--line)}.lead{max-width:65ch;color:var(--muted)}section{margin:1.8rem 0}.downloads{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.25rem}.downloads a{display:inline-flex;align-items:center;min-height:44px;padding:.35rem .72rem;border:1px solid #3b7566;border-radius:.35rem;font-weight:680;text-decoration:none}.downloads a:first-child{color:white;background:var(--dark)}.downloads a:hover,.downloads a:focus-visible{text-decoration:underline}.theorem{border:1px solid var(--line);border-left:4px solid var(--dark);padding:1rem 1.15rem;background:var(--white)}.math{display:block;padding:.65rem 0;font:1.13rem/1.3 Georgia,serif;overflow-x:auto}.scope{color:var(--muted)}ol,ul{padding-left:1.25rem;margin:.5rem 0}li+li{margin-top:.45rem}code{overflow-wrap:anywhere}footer{padding-top:1rem;border-top:1px solid var(--line);color:var(--muted)}
+</style>
+</head>
+<body><main>
+<header>
+<p class="label">FBDD equivalence · Paper 1 · Public research manuscript · hys-ops</p>
+<h1>A deterministic subexponential-time equivalence test for free binary decision diagrams</h1>
+<p class="lead">Two free binary decision diagrams can read the same input bits in different orders, even on different paths in one diagram. Can we tell deterministically whether they always give the same answer, without checking every Boolean assignment?</p>
+<nav aria-label="Research materials" class="downloads">
+<a href="files/FBDD_Equivalence_Manuscript.pdf">Read the 11-page manuscript (PDF)</a>
+<a href="files/FBDD_Equivalence_Source.zip">LaTeX and Lean source (ZIP)</a>
+<a href="files/SHA256SUMS">SHA-256 checksums</a>
+</nav>
+</header>
+<section class="theorem" aria-labelledby="main-result">
+<h2 id="main-result">Deterministic equivalence, with a counterexample</h2>
+<p>For two explicitly supplied FBDDs with <em>N</em> total nodes and <em>n</em> distinct queried variables, the manuscript gives a uniform deterministic algorithm with worst-case bit time</p>
+<span class="math" aria-label="poly N times the minimum of 2 to the n and 2 to the order of N to the two-thirds times log N plus 2">poly(<i>N</i>) · min{2<sup><i>n</i></sup>, 2<sup>O(<i>N</i><sup>2/3</sup> log(<i>N</i>+2))</sup>}.</span>
+<p>When the diagrams differ, it returns a Boolean input on which their outputs disagree. The subexponential bound is in the number of supplied nodes; the diagrams do not need a shared variable order.</p>
+</section>
+<section aria-labelledby="argument">
+<h2 id="argument">The proof in three steps</h2>
+<ol>
+<li><strong>Compare polynomials.</strong> Translate each FBDD into a multilinear polynomial. Checking whether their difference is zero is equivalent to checking equality on every Boolean input.</li>
+<li><strong>Build one set of tests for a block.</strong> Fix the variables outside a block. If the block has <em>k</em> query occurrences, the remaining polynomial has a short triangular recurrence. The manuscript constructs a common list of <em>O</em>(<em>k</em>²) field points that detects every nonzero recurrence of this form, regardless of the fixed values. One fixed FBDD realizes a family of bilinear forms as the outside values vary, showing that quadratic list length can be necessary.</li>
+<li><strong>Combine the tests and recover a Boolean witness.</strong> Enumerate Boolean values for heavily repeated variables and take the product of the test lists for the other blocks. A nonzero field evaluation can be turned into a Boolean disagreement one coordinate at a time.</li>
+</ol>
+</section>
+<section aria-labelledby="limit">
+<h2 id="limit">Where the lower bound applies</h2>
+<p>The matching 2<sup>Θ(<i>N</i><sup>2/3</sup> log <i>N</i>)</sup> bound concerns the cost of two specified rules that use a common partition across modes and explicitly output a Cartesian product of local tests, with the block-size or grid-scan conditions in the paper. It is <strong>not a lower bound on arbitrary FBDD equivalence algorithms</strong>. The existence of a deterministic quasipolynomial-time algorithm for the general problem remains open in the manuscript.</p>
+</section>
+<section aria-labelledby="lean">
+<h2 id="lean">What Lean checks</h2>
+<p>The correctness of the decision procedure and the reconstruction of Boolean counterexamples are verified in Lean 4.19.0. The development also checks the common local test construction, the global candidate-count bound, and local quadratic optimality. The replay includes <code>solve_spec</code> and <code>main_checked</code>. Appendix C maps the manuscript claims to declarations.</p>
+<p class="scope">The full bit-time accounting and the assembly of the routing and expander graph family for the restricted-model lower bound are supplied as written proofs. They are outside the end-to-end Lean verification.</p>
+</section>
+<section aria-labelledby="lineage">
+<h2 id="lineage">How this grew out of the earlier work</h2>
+<p>In the <a href="https://github.com/hys-ops/residual-response-tool">residual-response work</a>, the question was what a computation can still learn from one free block after fixing the rest. For FBDD equivalence the roles change: fix the outside variables, describe the polynomial that remains on the block, and build a set of tests that works across all those descriptions. This is the methodological link; the FBDD proof does not assume the earlier HWB theorems.</p>
+</section>
+<section id="research-path"><h2>How the proofs developed</h2><p>The first two pages record the earlier strategy and why it had to change. Common local tests feed the improved algorithm. The last three pages develop a separate lower-bound branch for specified output rules.</p><ol class="stages"><li><a href="path/first-deterministic-bound.html">First deterministic subexponential test</a><br><small>Earlier result; superseded by the block bound</small></li><li><a href="path/enumeration-limit.html">Why the first enumeration could not give the next bound</a><br><small>Earlier result; a boundary of one method</small></li><li><a href="path/common-local-tests.html">A common quadratic-size test for all block restrictions</a><br><small>Technical ingredient in the improved upper bound</small></li><li><a href="path/cartesian-benchmark.html">Why a Cartesian product can be expensive</a><br><small>Direct predecessor of the restricted lower bound</small></li><li><a href="path/matching-output-exponent.html">Closing the exponent and logarithm for two output rules</a><br><small>Restricted-model result; not a general lower bound</small></li><li><a href="path/shape-costs.html">Exact costs for a given block shape</a><br><small>Companion computation for the restricted output models</small></li></ol></section>
+<footer><p>Working manuscript; the research materials include written proofs and a Lean replay. hys-ops directed the research, starting from the question of what the rest of a computation can learn about a block of unfixed input. ChatGPT and Codex contributed to developing the mathematical arguments, drafting the manuscript, and writing the Lean formalization.</p></footer>
+
+</main></body></html>

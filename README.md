@@ -59,6 +59,10 @@ flowchart TD
 
 Solid arrows mark a construction or result actually used in the next argument. Dotted arrows mark methodological inspiration, not a logical dependency. Removing the tournament theorem would remove the realization of the code rows in the source. The code-capacity calculation and the diagram lower bounds have their own proofs.
 
+## New manuscript: FBDD equivalence
+
+[Paper 1 and the stages leading to it](https://hys-ops.github.io/residual-response-tool/) · [GitHub summary and manuscript downloads](proofs/fbdd-equivalence.md)
+
 ## Read a proof
 
 | Result | Where the method enters | What the proof establishes |
